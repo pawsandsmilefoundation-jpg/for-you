@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Only For Dimple ❤️</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at top, #ff5f9e, #3a0a5e);
+      color: #fff;
+      text-align: center;
+    }
+    .container {
+      padding: 50px 20px;
+    }
+    h1 {
+      font-size: 2.6em;
+    }
+    h2 {
+      margin-top: 35px;
+    }
+    p {
+      font-size: 1.15em;
+      max-width: 720px;
+      margin: 18px auto;
+      line-height: 1.75;
+    }
+    input {
+      padding: 10px;
+      border-radius: 20px;
+      border: none;
+      text-align: center;
+      width: 240px;
+      outline: none;
+    }
+    button {
+      padding: 11px 26px;
+      border: none;
+      border-radius: 25px;
+      margin-top: 15px;
+      cursor: pointer;
+      background: #fff;
+      color: #ff4f7b;
+      font-size: 1em;
+    }
+    .hidden {
+      display: none;
+    }
+    .dogs {
+      font-size: 2.3em;
+      margin: 25px 0;
+      cursor: pointer;
+    }
+    .secret {
+      background: rgba(255,255,255,0.15);
+      border-radius: 20px;
+      padding: 20px;
+      margin-top: 30px;
+    }
+    footer {
+      margin-top: 70px;
+      font-size: 0.9em;
+      opacity: 0.85;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Hey ❤️</h1>
+
+  <p>
+    Agar tum ye raat ke 12 baje ke baad padh rahi ho,  
+    toh jaan lo —  
+    ye words kisi aur ke liye nahi likhe gaye 🌙
+  </p>
+
+  <p>
+    Ye website public nahi hai.  
+    Ye sirf us ladki ke liye hai  
+    jo mere dil ka sabse soft hissa hai 🐾
+  </p>
+
+  <p><b>Question:</b> Hum pehli baar kab mile the?</p>
+  <input type="text" id="answer" placeholder="DD Month YY">
+  <br>
+  <button onclick="checkAnswer()">Enter 💖</button>
+
+  <div id="content" class="hidden">
+    <h1>Happy Anniversary Dimple ❤️</h1>
+
+    <div class="dogs" onclick="openSecret()">🐶🐾🐕‍🦺</div>
+
+    <p>
+      <b>1 December 2024</b> —  
+      wo din jab hum mile the…  
+      aur bina kisi warning ke,  
+      meri zindagi ka sabse khoobsurat chapter start ho gaya ✨
+    </p>
+
+    <p>
+      Phir aayi <b>19 January</b>, around <b>1:30 AM</b> —  
+      jab baatein feelings bani,  
+      aur feelings ne relationship ka naam le liya 💫  
+      uss raat ke baad,  
+      main kabhi wahi purana nahi raha.
+    </p>
+
+    <p>
+      Tumhara dogs ke liye pyaar  
+      mujhe yaad dilata hai  
+      ki tumhara dil kitna pure hai 🐶❤️  
+      aur shayad isi wajah se  
+      mera dil tumhara ho gaya 🐾
+    </p>
+
+    <h2>💍 My Promise To You 💍</h2>
+
+    <p>
+      Main kabhi door nahi jaunga.  
+      Chahe halat kaise bhi ho —  
+      <b>har pal, har saans, main tere saath rahunga</b>.  
+      Tumhara haath chhodna  
+      meri kahani ka part hi nahi hai ❤️
+    </p>
+
+    <!-- HIDDEN EASTER EGG -->
+    <div id="secret" class="secret hidden">
+      <h2>🐾 Hidden Message 🐾</h2>
+      <p>
+        Agar tum yahan tak pahunch gayi ho,  
+        iska matlab tumne dhyaan se dekha…  
+        jaise tum hamesha mujhe dekhti ho ❤️
+      </p>
+      <p>
+        Main tumhe sirf pyaar nahi karta,  
+        main tumhe choose karta hoon —  
+        <b>har roz, bina thake, bina rukhe.</b>
+      </p>
+    </div>
+
+    <!-- FUTURE LETTER -->
+    <div class="secret">
+      <h2>💌 A Letter From My Future Self 💌</h2>
+      <p>
+        Hey Dimple,  
+        agar tum ye future me padh rahi ho,  
+        toh ek baat jaan lo —
+      </p>
+      <p>
+        Main abhi bhi tumhara haath pakde khada hoon.  
+        Shayad time badal gaya ho,  
+        shayad hum aur strong ho gaye ho,  
+        lekin mera pyaar…  
+        <b>bilkul waisa hi hai.</b>
+      </p>
+      <p>
+        Agar kabhi tum thak jao,  
+        ya duniya zyada heavy lagne lage —  
+        bas peeche mud ke dekhna,  
+        main wahi hoon.  
+        <b>Tumhare saath.</b> 🌙
+      </p>
+    </div>
+
+    <h2>
+      Forever yours,<br>
+      Tanush 🐾❤️
+    </h2>
+
+    <p>
+      <b>Final Line:</b><br>
+      Agar zindagi dobara likhi jaaye,  
+      toh bhi main har version me  
+      <b>sirf tumhe hi choose karunga.</b>
+    </p>
+  </div>
+
+  <footer>
+    Not a website — this is my heart 🐶❤️
+  </footer>
+</div>
+
+<script>
+  function checkAnswer() {
+    const ans = document.getElementById("answer").value.toLowerCase().trim();
+    if (ans === "1 dec 24" || ans === "1 december 24") {
+      document.getElementById("content").style.display = "block";
+    } else {
+      alert("Galat jawab… ye sirf Dimple jaanti hai 😉");
+    }
+  }
+
+  function openSecret() {
+    document.getElementById("secret").style.display = "block";
+  }
+</script>
+
+</body>
+</html>
