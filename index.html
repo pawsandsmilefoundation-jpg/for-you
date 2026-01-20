@@ -10,20 +10,18 @@ body{
   font-family:'Segoe UI',sans-serif;
   overflow-x:hidden;
   color:white;
-  background: radial-gradient(circle at top,#1b0036,#ff4d6d);
   min-height:100vh;
+  background: url('img1.jpeg') repeat;
+  background-size: cover;
+  animation: bgMove 60s linear infinite;
 }
 
-/* Stars + Fireflies */
-body::before{
-  content:"";
-  position:fixed; top:0; left:0; width:100%; height:100%;
-  background:url('https://i.ibb.co/wKZtX9F/stars.png') repeat;
-  z-index:0;
-  animation: stars 60s linear infinite;
+@keyframes bgMove{
+  0% {background-position:0 0;}
+  100% {background-position:-2000px 0;}
 }
-@keyframes stars{from{background-position:0 0;}to{background-position:-10000px 0;}}
 
+/* Fireflies */
 .firefly{
   position:fixed;
   width:4px; height:4px;
@@ -50,9 +48,9 @@ button{padding:3vw 6vw;border:none;border-radius:15vw;margin-top:3vw;background:
 button:hover{transform: scale(1.05);}
 .hidden{display:none;}
 
-/* Card Fix - image overlay friendly */
+/* Card overlay fix */
 .card{
-  background: rgba(0,0,0,0.35); /* semi-transparent dark */
+  background: rgba(0,0,0,0.35);
   backdrop-filter: blur(6px);
   padding:5vw;
   border-radius:5vw;
@@ -66,7 +64,7 @@ button:hover{transform: scale(1.05);}
 .card h2{font-size:5vw; text-shadow:0 0 2vw #fff;}
 .card p{font-size:4vw; text-shadow:0 0 1.5vw #fff;}
 
-/* Slideshow Gallery */
+/* Slideshow */
 .gallery{position:relative; max-width:100%; margin:5vw auto;}
 .gallery img{width:100%; border-radius:5vw; opacity:0; position:absolute; left:0; top:0; transition: opacity 1.5s ease-in-out; z-index:1;}
 
@@ -130,28 +128,28 @@ button:hover{transform: scale(1.05);}
 <div class="card">
 <h1>Happy Anniversary Dimple ❤️</h1>
 <div class="dogs" onclick="openSecret()">🐶🐾🐕‍🦺</div>
-<p><b>1 December 2024</b> — jab hum mile aur meri duniya zyada khoobsurat ho gayi mene pucha bhi kya tha r u editor ? 😭😂✨</p>
+<p><b>1 December 2024</b> — jab hum mile aur meri duniya zyada khoobsurat ho gayi ✨</p>
 <p><b>19 January · 1:30 AM</b> — jab baatein feelings bani aur main tumhara 💫</p>
 </div>
 
 <div class="card">
 <h2>📸 Our Moments 📸</h2>
 <div class="gallery">
-  <img src="img1.jpeg" alt="Moment 1">
-  <img src="img2.jpeg" alt="Moment 2">
-  <img src="img3.jpeg" alt="Moment 3">
-  <img src="img4.jpeg" alt="Moment 4">
+<img src="img1.jpeg">
+<img src="img2.jpeg">
+<img src="img3.jpeg">
+<img src="img4.jpeg">
 </div>
 </div>
 
 <div class="card">
 <h2>💍 My Promise 💍</h2>
-<p>Main kabhi door nahi jaunga. Har pal tumhare saath rahunga. Main promise karta hoon ki hamesha tumhare saath rahunga, tumhe har mushkil mein support dunga, tumhari har baat dhyan se sununga, aur tumhe poore dil se aur sachche pyar se chahunga. Jo bhi ho, main hamesha tumhare liye wahan rahunga, kyunki tum meri duniya ho ❤️</p>
+<p>Main kabhi door nahi jaunga. Har pal tere saath rahunga ❤️</p>
 </div>
 
 <div id="secret" class="card hidden">
 <h2>🐾 Hidden Message 🐾</h2>
-<p>Tumne notice kiya… jaise tum hamesha mujhe karti ho ❤️ I choose you every day. mujhe nhj pata tumhe ye pasand ayega ya nhi but mujhe sachme time lga ise bnane me i love you jaan sachme bhaut jada .</p>
+<p>Tumne notice kiya… jaise tum hamesha mujhe karti ho ❤️ I choose you every day.</p>
 </div>
 
 <div class="card">
@@ -170,7 +168,7 @@ button:hover{transform: scale(1.05);}
 let music=document.getElementById('bgm');
 function toggleMusic(){if(music.paused){music.play();}else{music.pause();}}
 
-// Floating hearts + click hearts
+// Floating hearts
 function hearts(){
   setInterval(()=>{
     let h=document.createElement("div");
@@ -219,7 +217,6 @@ function openSecret(){
   const secret = document.getElementById("secret");
   secret.style.display = "block";
 
-  // floating tiny hearts inside hidden message
   for(let i=0;i<12;i++){
     let h = document.createElement("div");
     h.className="heart";
