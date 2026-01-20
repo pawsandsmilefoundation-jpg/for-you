@@ -186,10 +186,11 @@
 </div>
 
 <script>
-  function {
+  function checkAnswer() {
     const ans = document.getElementById("answer").value.toLowerCase().trim();
     if (ans === "1 dec 24" || ans === "1 december 24") {
       document.getElementById("content").style.display = "block";
+      document.getElementById("bgm").play();
     } else {
       alert("Galat jawab… ye sirf Dimple jaanti hai 😉");
     }
@@ -199,6 +200,7 @@
     document.getElementById("secret").style.display = "block";
   }
 </script>
+
 
 </body>
  
