@@ -76,6 +76,24 @@ button:hover{transform: scale(1.05);}
 }
 @keyframes floatUp{to{transform:translateY(-120vh);}}
 
+/* Hidden message */
+#secret {
+  display: none;             
+  position: relative;        
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(8px);
+  padding: 35px;
+  border-radius: 25px;
+  margin: 50px auto;
+  max-width: 800px;
+  text-align: center;
+  box-shadow: 0 0 25px rgba(255,77,109,0.7);
+  animation: fadeInScale 0.8s forwards;
+}
+@keyframes fadeInScale {0% {opacity:0; transform: scale(0.7);} 100% {opacity:1; transform: scale(1);}}
+#secret h2 {text-shadow: 0 0 15px #ff4d6d, 0 0 25px #ff4d6d, 0 0 35px #ff4d6d;}
+#secret p {text-shadow: 0 0 10px #fff3, 0 0 15px #ffb3c1;}
+
 /* Dogs paw */
 .dogs{font-size:2.5em; cursor:pointer; margin:15px 0;}
 
@@ -188,6 +206,26 @@ function typeWriter(i=0){
   }
 }
 
+// Paw click hidden message
+function openSecret(){
+  const secret = document.getElementById("secret");
+  secret.style.display = "block";
+
+  // floating tiny hearts inside hidden message
+  for(let i=0;i<12;i++){
+    let h = document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤️";
+    h.style.left=20 + Math.random()*60 + "%";
+    h.style.top=Math.random()*50 + "%";
+    h.style.fontSize=10 + Math.random()*15 + "px";
+    h.style.animationDuration=3 + Math.random()*2 + "s";
+    secret.appendChild(h);
+    setTimeout(()=>h.remove(),5000);
+  }
+}
+
+// Unlock content
 function unlock(){
   let a=document.getElementById("answer").value.toLowerCase().trim();
   if(a==="1 dec 24"||a==="1 december 24"){
@@ -200,11 +238,6 @@ function unlock(){
     alert("Sirf Dimple jaanti hai 😉");
   }
 }
-
-function openSecret(){
-  document.getElementById("secret").style.display="block";
-}
 </script>
-
 </body>
 </html>
