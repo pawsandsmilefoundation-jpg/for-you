@@ -1,117 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Only For Dimple ❤️</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #1d2671, #c33764);
-      color: #fff;
-      text-align: center;
-      overflow-x: hidden;
-    }
+<meta charset="UTF-8">
+<title>Only For Dimple ❤️</title>
+<style>
+body{
+  margin:0;
+  font-family:'Segoe UI',sans-serif;
+  overflow-x:hidden;
+  color:white;
+  background: radial-gradient(circle at top,#1b0036,#ff4d6d);
+  height:100vh;
+}
 
-    .container {
-      padding: 60px 20px;
-      animation: fadeIn 2s ease;
-    }
+/* Stars + Fireflies */
+body::before{
+  content:"";
+  position:fixed; top:0; left:0; width:100%; height:100%;
+  background:url('https://i.ibb.co/wKZtX9F/stars.png') repeat;
+  z-index:0;
+  animation: stars 60s linear infinite;
+}
+@keyframes stars{from{background-position:0 0;}to{background-position:-10000px 0;}}
 
-    h1 {
-      font-size: 2.8em;
-      margin-bottom: 10px;
-    }
+.firefly{
+  position:fixed;
+  width:4px; height:4px;
+  background:#fff;
+  border-radius:50%;
+  animation: fly linear infinite;
+  opacity:0.7;
+}
+@keyframes fly{0%{transform:translate(0,0)}100%{transform:translate(100vw,-120vh)}}
 
-    h2 {
-      margin-top: 35px;
-    }
+/* Container */
+.container{
+  position:relative;
+  z-index:2;
+  text-align:center;
+  padding:50px 20px;
+}
 
-    p {
-      font-size: 1.15em;
-      max-width: 720px;
-      margin: 18px auto;
-      line-height: 1.8;
-      opacity: 0.95;
-    }
+h1{font-size:3em;margin-bottom:15px;}
+h2{margin-top:30px;}
+p{max-width:750px;margin:20px auto;line-height:1.8;font-size:1.15em;}
+input{padding:12px;border-radius:25px;border:none;width:230px;text-align:center;}
+button{padding:12px 30px;border:none;border-radius:25px;margin-top:15px;background:white;color:#ff4d6d;font-size:1em;cursor:pointer;transition:.3s;}
+button:hover{transform: scale(1.05);}
+.hidden{display:none;}
+.card{
+  background:rgba(255,255,255,0.12);
+  backdrop-filter:blur(6px);
+  padding:30px;
+  border-radius:25px;
+  margin:35px auto;
+  max-width:850px;
+  animation: fadeUp 1.5s ease;
+}
+@keyframes fadeUp{from{opacity:0; transform:translateY(30px);} to{opacity:1; transform:translateY(0);}}
 
-    input {
-      padding: 12px;
-      border-radius: 25px;
-      border: none;
-      text-align: center;
-      width: 240px;
-      outline: none;
-      font-size: 1em;
-    }
+/* Slideshow Gallery */
+.gallery{position:relative; max-width:700px; margin:25px auto;}
+.gallery img{width:100%; border-radius:20px; opacity:0; position:absolute; left:0; top:0; transition: opacity 1.5s ease-in-out;}
 
-    button {
-      padding: 12px 28px;
-      border: none;
-      border-radius: 25px;
-      margin-top: 18px;
-      cursor: pointer;
-      background: #fff;
-      color: #c33764;
-      font-size: 1em;
-      transition: 0.3s;
-    }
+/* Floating Hearts */
+.heart{
+  position:fixed;
+  bottom:-20px;
+  font-size:24px;
+  animation: floatUp linear infinite;
+  opacity:0.7;
+  color:#ff4d6d;
+  text-shadow:0 0 8px #fff;
+  cursor:pointer;
+}
+@keyframes floatUp{to{transform:translateY(-120vh);}}
 
-    button:hover {
-      transform: scale(1.05);
-    }
+/* Dogs paw */
+.dogs{font-size:2.5em; cursor:pointer; margin:15px 0;}
 
-    .hidden {
-      display: none;
-    }
-
-    .dogs {
-      font-size: 2.5em;
-      margin: 25px 0;
-      cursor: pointer;
-    }
-
-    .card {
-      background: rgba(255,255,255,0.12);
-      padding: 25px;
-      border-radius: 20px;
-      margin: 25px auto;
-      max-width: 760px;
-      backdrop-filter: blur(5px);
-      animation: fadeUp 1.5s ease;
-    }
-
-    footer {
-      margin-top: 70px;
-      font-size: 0.9em;
-      opacity: 0.8;
-    }
-
-    /* Animations */
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
-    }
-
-    @keyframes fadeUp {
-      from {opacity: 0; transform: translateY(30px);}
-      to {opacity: 1; transform: translateY(0);}
-    }
-
-    /* Floating hearts */
-    .heart {
-      position: fixed;
-      bottom: -10px;
-      font-size: 20px;
-      animation: floatUp 6s linear infinite;
-      opacity: 0.6;
-    }
-
-    @keyframes floatUp {
-      from {transform: translateY(0);}
-      to {transform: translateY(-120vh);}
-    }
-  </style>
+/* Music button */
+#musicBtn{position:fixed; top:20px; right:20px; z-index:10;padding:10px 15px;border:none;border-radius:20px;background:white;color:#ff4d6d;font-weight:bold; cursor:pointer;}
+</style>
 </head>
 <body>
 
@@ -119,114 +89,121 @@
   <source src="song.mp3" type="audio/mpeg">
 </audio>
 
+<button id="musicBtn" onclick="toggleMusic()">Play/Pause Music</button>
+
 <div class="container">
-  <h1>Hey ❤️</h1>
+<h1>Hey ❤️</h1>
+<p>Ye website simple nahi hai… ye meri feelings ka cinematic + magical reflection hai 🌙</p>
 
-  <p>
-    Ye website simple nahi hai…  
-    ye sirf **sachcha** hai 🌙
-  </p>
+<p><b>Question:</b> Hum pehli baar kab mile the?</p>
+<input id="answer" placeholder="DD Month YY"><br>
+<button onclick="unlock()">Enter 💖</button>
 
-  <p><b>Question:</b> Hum pehli baar kab mile the?</p>
-  <input type="text" id="answer" placeholder="DD Month YY">
-  <br>
-  <button onclick="checkAnswer()">Enter 💖</button>
+<div id="content" class="hidden">
 
-  <div id="content" class="hidden">
+<div class="card">
+<h1>Happy Anniversary Dimple ❤️</h1>
+<div class="dogs" onclick="openSecret()">🐶🐾🐕‍🦺</div>
+<p><b>1 December 2024</b> — jab hum mile aur meri duniya zyada khoobsurat ho gayi ✨</p>
+<p><b>19 January · 1:30 AM</b> — jab baatein feelings bani aur main tumhara 💫</p>
+</div>
 
-    <div class="card">
-      <h1>Happy Anniversary Dimple ❤️</h1>
-      <div class="dogs" onclick="openSecret()">🐶🐾🐕‍🦺</div>
+<div class="card">
+<h2>📸 Our Moments 📸</h2>
+<div class="gallery">
+<img src="img1.jpg">
+<img src="img2.jpg">
+<img src="img3.jpg">
+<img src="img4.jpg">
+</div>
+</div>
 
-      <p>
-        <b>1 December 2024</b> —  
-        jab hum mile…  
-        aur meri life ne bina pooche  
-        tumhe apna bana liya ✨
-      </p>
+<div class="card">
+<h2>💍 My Promise 💍</h2>
+<p>Main kabhi door nahi jaunga. Har pal tere saath rahunga ❤️</p>
+</div>
 
-      <p>
-        <b>19 January · 1:30 AM</b> —  
-        wo waqt jab baatein  
-        feelings ban gayi…  
-        aur main tumhara 💫
-      </p>
-    </div>
+<div id="secret" class="card hidden">
+<h2>🐾 Hidden Message 🐾</h2>
+<p>Tumne notice kiya… jaise tum hamesha mujhe karti ho ❤️ I choose you every day.</p>
+</div>
 
-    <div class="card">
-      <p>
-        Tumhara dogs ke liye pyaar  
-        mujhe har roz yaad dilata hai  
-        ki tumhara dil kitna pure hai 🐾  
-        aur shayad isi wajah se  
-        main tumse itna pyaar karta hoon ❤️
-      </p>
-    </div>
+<div class="card">
+<h2>💌 Future Letter 💌</h2>
+<p id="letter"></p>
+</div>
 
-    <div class="card">
-      <h2>💍 My Promise 💍</h2>
-      <p>
-        Main kabhi door nahi jaunga.  
-        Chahe life ka scene jaisa bhi ho —  
-        <b>har pal, har saans, main tere saath rahunga.</b>
-      </p>
-    </div>
+<h2>Forever Yours,<br>Tanush ❤️</h2>
+</div>
 
-    <div id="secret" class="card hidden">
-      <h2>🐾 Hidden Message 🐾</h2>
-      <p>
-        Tumne notice kiya…  
-        jaise tum hamesha mujhe karti ho ❤️  
-        Aur haan,  
-        <b>I choose you. Every single day.</b>
-      </p>
-    </div>
-
-    <div class="card">
-      <h2>💌 Future Letter 💌</h2>
-      <p>
-        Agar tum ye future me padh rahi ho,  
-        toh jaan lo —  
-        main abhi bhi wahi hoon…  
-        tumhare saath, tumhare liye 🌙
-      </p>
-    </div>
-
-    <h2>Forever yours,<br>Tanush 🐾❤️</h2>
-
-  </div>
-
-  <footer>
-    Not simple. Just real ❤️
-  </footer>
+<footer>Not just a website — a magical cinematic memory 💖</footer>
 </div>
 
 <script>
-  function checkAnswer() {
-    const ans = document.getElementById("answer").value.toLowerCase().trim();
-    if (ans === "1 dec 24" || ans === "1 december 24") {
-      document.getElementById("content").style.display = "block";
-      document.getElementById("bgm").play();
-      createHearts();
-    } else {
-      alert("Sirf Dimple jaanti hai 😉");
-    }
-  }
+// Music control
+let music=document.getElementById('bgm');
+function toggleMusic(){if(music.paused){music.play();}else{music.pause();}}
 
-  function openSecret() {
-    document.getElementById("secret").style.display = "block";
-  }
+// Floating hearts + click hearts
+function hearts(){
+  setInterval(()=>{
+    let h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤️";
+    h.style.left=Math.random()*100+"vw";
+    h.style.fontSize=15+Math.random()*25+"px";
+    h.style.animationDuration=4+Math.random()*4+"s";
+    h.onclick=function(){this.remove();};
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),8000);
+  },200);
+}
 
-  function createHearts() {
-    setInterval(() => {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.innerHTML = "❤️";
-      heart.style.left = Math.random() * 100 + "vw";
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 6000);
-    }, 800);
+// Fireflies
+for(let i=0;i<30;i++){
+  let f=document.createElement("div");
+  f.className="firefly";
+  f.style.left=Math.random()*100+"vw";
+  f.style.top=Math.random()*100+"vh";
+  f.style.animationDuration=(20+Math.random()*20)+"s";
+  document.body.appendChild(f);
+}
+
+// Slideshow
+let slideIndex=0;
+function showSlides(){
+  let slides=document.querySelectorAll(".gallery img");
+  slides.forEach(s=>s.style.opacity=0);
+  slides[slideIndex].style.opacity=1;
+  slideIndex=(slideIndex+1)%slides.length;
+  setTimeout(showSlides,3500);
+}
+
+// Typewriter effect for future letter
+let letterText="Future me agar tum ye padh rahi ho, toh yaad rakhna — main abhi bhi wahi hoon, tumhare saath. Tumhare liye 🌙";
+function typeWriter(i=0){
+  if(i<letterText.length){
+    document.getElementById("letter").innerHTML+=letterText.charAt(i);
+    setTimeout(()=>typeWriter(i+1),50);
   }
+}
+
+function unlock(){
+  let a=document.getElementById("answer").value.toLowerCase().trim();
+  if(a==="1 dec 24"||a==="1 december 24"){
+    document.getElementById("content").style.display="block";
+    music.play();
+    hearts();
+    showSlides();
+    typeWriter();
+  }else{
+    alert("Sirf Dimple jaanti hai 😉");
+  }
+}
+
+function openSecret(){
+  document.getElementById("secret").style.display="block";
+}
 </script>
 
 </body>
