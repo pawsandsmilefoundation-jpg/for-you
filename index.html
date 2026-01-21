@@ -241,7 +241,7 @@ button{
   left:0;
   width:100%;
   height:100%;
-  background:rgba(0,0,0,0.8);
+  background:rgba(0,0,0,0.9);
   display:none;
   justify-content:center;
   align-items:center;
@@ -256,12 +256,13 @@ button{
 }
 
 .diaryBox{
-  background:white;
+  background:#fff0f8;
   color:black;
   width:90%;
   max-width:420px;
   border-radius:20px;
   padding:15px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.4);
 }
 
 .diaryBox textarea{
@@ -270,6 +271,8 @@ button{
   padding:10px;
   border-radius:10px;
   font-size:15px;
+  resize:none;
+  border:1px solid #ffb3c1;
 }
 
 .diaryEntry{
@@ -294,7 +297,6 @@ button{
   max-height:200px;
   overflow-y:auto;
 }
-
 </style>
 </head>
 
@@ -389,17 +391,15 @@ toh yaad rakhna — main abhi bhi wahi hoon jb hum mile the aur mene pucha tha r
 
 <div id="panda" style="display:none">🐼</div>
 
-<!-- 📔 DIARY PAGE -->
+<!-- 📔 REAL DIARY PAGE -->
 <div id="diaryPage">
   <div class="diaryBox">
     <h3>📔 Personal Diary</h3>
     <p id="todayDate"></p>
-
     <textarea id="diaryText" placeholder="Aaj jo dil me hai likho..."></textarea>
-
+    <input type="file" id="diaryPhoto" accept="image/*">
     <button onclick="saveDiary()">Save</button>
     <button onclick="closeDiary()">Close</button>
-
     <hr>
     <div id="oldEntries"></div>
   </div>
@@ -476,7 +476,7 @@ function stars(){
   document.body.appendChild(s);
   setTimeout(()=>s.remove(),2000);
  },1500);
-} 
+}
 
 /* 🎂 BIRTHDAY COUNTDOWN */
 function birthdayCountdown(){
@@ -540,9 +540,11 @@ function confetti(){
 }
 specialEffects();
 
-/* 📔 UPDATED DIARY SYSTEM */
+/* 📔 REAL DIARY SYSTEM */
+const diaryPage = document.getElementById("diaryPage");
 const oldEntries = document.getElementById("oldEntries");
 const todayDateEl = document.getElementById("todayDate");
+let diaryEntries = [];
 let currentIndex = 0;
 
 function openDiary(){
@@ -551,14 +553,16 @@ function openDiary(){
     alert("Sirf Tanush ya Dimple hi likh sakte hain 💌");
     return;
   }
-  localStorage.setItem("diaryAuthor", author);
 
   let p = prompt("Diary password 💖");
   if(p !== "dimple"){ alert("Wrong password ❌"); return; }
 
   diaryPage.style.display = "flex";
   setTimeout(()=> diaryPage.classList.add("pageOpen"), 50);
-  loadDiary();
+
+  diaryEntries = JSON.parse(localStorage.getItem("diary") || "[]");
+  currentIndex = 0;
+  loadDiary(author);
 }
 
 function closeDiary(){
@@ -567,34 +571,49 @@ function closeDiary(){
 }
 
 function saveDiary(){
-  let t = document.getElementById("diaryText").value.trim();
-  if(t===""){ alert("Kuch toh likho ❤️"); return; }
+  let text = document.getElementById("diaryText").value.trim();
+  if(text === ""){ alert("Kuch toh likho ❤️"); return; }
 
-  let d = new Date().toDateString();
-  let author = localStorage.getItem("diaryAuthor") || "Unknown";
-
-  let diary = JSON.parse(localStorage.getItem("diary") || "[]");
-  diary.unshift({date: d, text: t, author});
-  localStorage.setItem("diary",JSON.stringify(diary));
-
-  document.getElementById("diaryText").value = "";
-  loadDiary();
+  let photoInput = document.getElementById("diaryPhoto");
+  let photo = "";
+  if(photoInput.files && photoInput.files[0]){
+    let reader = new FileReader();
+    reader.onload = function(e){ 
+      photo = e.target.result;
+      pushDiaryEntry(text, photo); 
+    };
+    reader.readAsDataURL(photoInput.files[0]);
+  } else {
+    pushDiaryEntry(text, photo);
+  }
 }
 
-function loadDiary(){
-  todayDateEl.innerText = "📅 " + new Date().toDateString();
+function pushDiaryEntry(text, photo){
+  let d = new Date().toDateString();
+  let author = prompt("Enter Author Again (Tanush/Dimple) 💖") || "Unknown";
   let diary = JSON.parse(localStorage.getItem("diary") || "[]");
+  diary.unshift({date: d, author, text, photo});
+  localStorage.setItem("diary", JSON.stringify(diary));
+  document.getElementById("diaryText").value = "";
+  document.getElementById("diaryPhoto").value = "";
+  diaryEntries = diary;
+  currentIndex = 0;
+  loadDiary(author);
+}
+
+function loadDiary(author){
+  todayDateEl.innerText = "📅 " + new Date().toDateString();
   oldEntries.innerHTML = "";
 
-  diary.forEach((e, i)=>{
+  diaryEntries.forEach((entry,i)=>{
     const div = document.createElement("div");
     div.className = "diaryEntry";
     if(i === currentIndex) div.classList.add("active");
-    div.innerHTML = `<b>${e.date} - ${e.author}</b><br><br>${e.text}`;
+    div.innerHTML = `<b>${entry.date} - ${entry.author}</b><br><br>${entry.text}` + (entry.photo ? `<br><img src="${entry.photo}" style="width:100%; margin-top:10px; border-radius:10px;">` : "");
     oldEntries.appendChild(div);
   });
 
-  const entries = document.querySelectorAll(".diaryEntry");
+  let entries = document.querySelectorAll(".diaryEntry");
   let startX = 0;
   oldEntries.ontouchstart = (e)=>{ startX = e.touches[0].clientX; };
   oldEntries.ontouchend = (e)=>{
@@ -614,8 +633,6 @@ function loadDiary(){
     }
   };
 }
-
 </script>
-
 </body>
 </html>
