@@ -108,6 +108,8 @@ button{
   border:none;
   z-index:100;
 }
+<!-- 📔 DIARY ICON -->
+<div id="diaryIcon" onclick="openDiary()">📔</div>
 
 /* PAW */
 .paw{
@@ -224,6 +226,52 @@ button{
 }
 @keyframes pandaUp{
   to{bottom:-5vw;}
+}
+/* 📔 DIARY ICON */
+#diaryIcon{
+  position:fixed;
+  left:10px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:50px;
+  cursor:pointer;
+  z-index:999;
+}
+
+/* 📔 DIARY FULL PAGE */
+#diaryPage{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.8);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+
+.diaryBox{
+  background:white;
+  color:black;
+  width:90%;
+  max-width:420px;
+  border-radius:20px;
+  padding:15px;
+}
+
+.diaryBox textarea{
+  width:100%;
+  height:120px;
+  padding:10px;
+  border-radius:10px;
+  font-size:15px;
+}
+
+#oldEntries{
+  max-height:200px;
+  overflow-y:auto;
 }
 
 </style>
@@ -491,8 +539,62 @@ function confetti(){
 }
 
 specialEffects();
+<script>
+function openDiary(){
+  document.getElementById("diaryPage").style.display="flex";
+  loadDiary();
+}
+
+function closeDiary(){
+  document.getElementById("diaryPage").style.display="none";
+}
+
+function saveDiary(){
+  let text=document.getElementById("diaryText").value;
+  if(text===""){
+    alert("Kuch toh likho ❤️");
+    return;
+  }
+
+  let date=new Date().toDateString();
+  let diary=JSON.parse(localStorage.getItem("diary")||"[]");
+
+  diary.unshift({date,text});
+  localStorage.setItem("diary",JSON.stringify(diary));
+
+  document.getElementById("diaryText").value="";
+  loadDiary();
+}
+
+function loadDiary(){
+  let diary=JSON.parse(localStorage.getItem("diary")||"[]");
+  let box=document.getElementById("oldEntries");
+  box.innerHTML="";
+
+  document.getElementById("todayDate").innerText="📅 "+new Date().toDateString();
+
+  diary.forEach(d=>{
+    box.innerHTML+=`<p><b>${d.date}</b><br>${d.text}</p><hr>`;
+  });
+}
+</script>
 
 </script>
+<!-- 📔 DIARY PAGE -->
+<div id="diaryPage">
+  <div class="diaryBox">
+    <h3>📔 Personal Diary</h3>
+    <p id="todayDate"></p>
+
+    <textarea id="diaryText" placeholder="Aaj jo dil me hai likho..."></textarea>
+
+    <button onclick="saveDiary()">Save</button>
+    <button onclick="closeDiary()">Close</button>
+
+    <hr>
+    <div id="oldEntries"></div>
+  </div>
+</div>
 
 </body>
 </html>
