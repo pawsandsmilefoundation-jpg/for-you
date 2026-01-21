@@ -6,7 +6,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-
+/* 💥 CONFETTI */
+.confetti{
+  position:fixed;
+  top:-10vh;
+  font-size:5vw;
+  animation:fall 4s linear infinite;
+}
+@keyframes fall{
+  to{transform:translateY(120vh) rotate(360deg);}
+}
 body{
   margin:0;
   font-family:'Segoe UI',sans-serif;
@@ -308,16 +317,7 @@ toh yaad rakhna — main abhi bhi wahi hoon jb hum mile the aur mene pucha tha r
   <p>5 May 💖</p>
   <div id="bdayTimer">Loading...</div>
 </div>
-/* 💥 CONFETTI */
-.confetti{
-  position:fixed;
-  top:-10vh;
-  font-size:5vw;
-  animation:fall 4s linear infinite;
-}
-@keyframes fall{
-  to{transform:translateY(120vh) rotate(360deg);}
-}
+
 <div class="card" id="valentineSecret" style="display:none">
   <h2>🎁 Valentine Special 🎁</h2>
   <p>
