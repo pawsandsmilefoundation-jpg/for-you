@@ -12,105 +12,280 @@ body{
   color:white;
   background:url('img1.jpeg') repeat;
   background-size:cover;
-  animation:bgMove 80s linear infinite;
+  animation:bgMove 90s linear infinite;
   overflow-x:hidden;
 }
 @keyframes bgMove{
-  from{background-position:0 0;}
-  to{background-position:-3000px 0;}
+  to{background-position:-3500px 0;}
 }
 
-.container{
-  padding:6vw;
-  text-align:center;
-}
+.container{padding:6vw;text-align:center;}
 
-/* CARD */
 .card{
   background:rgba(0,0,0,0.45);
   backdrop-filter:blur(8px);
   border-radius:6vw;
   padding:6vw;
   margin:10vw auto;
-  max-width:92%;
-  box-shadow:0 0 30px rgba(0,0,0,0.6);
+  max-width:94%;
+  box-shadow:0 0 35px rgba(0,0,0,0.6);
 }
 
-/* GALLERY – NO OVERLAP */
+/* GALLERY */
 .gallery{
   position:relative;
   width:100%;
-  height:60vw;
-  max-height:320px;
+  height:75vw;
+  max-height:460px;
   overflow:hidden;
   border-radius:5vw;
-  margin-top:4vw;
 }
 .gallery img{
   width:100%;
   height:100%;
-  object-fit:cover;
+  object-fit:contain;
   position:absolute;
-  top:0; left:0;
   opacity:0;
-  transition:opacity 1.2s ease-in-out;
+  transition:opacity 1.2s;
 }
 
-/* COUNTER */
-.counter{
-  margin-top:4vw;
-  font-size:4.5vw;
-}
+/* COUNTERS */
 .counter span{
   display:block;
-  font-size:6.5vw;
+  font-size:7vw;
   font-weight:bold;
   color:#ffb3c1;
 }
+.bigCount{font-size:6vw;color:#ffe6eb;}
 
-/* INPUT + BUTTON */
 input{
   padding:3vw;
   border-radius:10vw;
   border:none;
-  width:65%;
-  text-align:center;
+  width:70%;
   font-size:4vw;
+  text-align:center;
 }
 button{
   padding:3vw 6vw;
   border:none;
   border-radius:10vw;
   font-size:4vw;
-  cursor:pointer;
   background:white;
   color:#ff4d6d;
   margin-top:3vw;
 }
 
-/* MUSIC BUTTON */
 #musicBtn{
   position:fixed;
   top:4vw;
   right:4vw;
-  padding:2.5vw 4vw;
   border-radius:10vw;
-  border:none;
+  padding:2.5vw 4vw;
   z-index:100;
 }
 
-/* PAW */
-.paw{
-  font-size:10vw;
-  cursor:pointer;
+/* EFFECTS */
+.heart{
+  position:fixed;
+  bottom:-10vh;
+  font-size:6vw;
+  animation:floatUp linear infinite;
+}
+@keyframes floatUp{to{transform:translateY(-120vh)}}
+
+.star{
+  position:fixed;
+  width:2px;
+  height:80px;
+  background:linear-gradient(white,transparent);
+  animation:shoot 2s linear infinite;
+}
+@keyframes shoot{to{transform:translate(-400px,400px);opacity:0}}
+
+.confetti{
+  position:fixed;
+  width:10px;
+  height:10px;
+  background:red;
+  top:-10px;
+  animation:fall linear infinite;
+}
+@keyframes fall{
+  to{transform:translateY(110vh) rotate(360deg);}
 }
 
-/* HIDDEN MESSAGE */
-#secret{
-  display:none;
-  animation:fadeIn 1s ease;
+#birthdayLetter{display:none;}
+</style>
+</head>
+
+<body>
+
+<audio id="bgm" loop>
+  <source src="song.mp3" type="audio/mpeg">
+</audio>
+<button id="musicBtn" onclick="toggleMusic()">Play / Pause</button>
+
+<div class="container">
+
+<h1>Hey ❤️</h1>
+<p>Meri feelings… meri duniya 🌙</p>
+
+<input id="answer" placeholder="1 dec 24"><br>
+<button onclick="unlock()">Enter 💖</button>
+
+<div id="content" style="display:none">
+
+<div class="card">
+<h2>Happy Anniversary Dimple ❤️</h2>
+<p><b>1 December 2024</b><br><b>19 January · 1:30 AM</b></p>
+</div>
+
+<div class="card">
+<h2>⏳ Time Together</h2>
+<div class="counter">
+<span id="days">0</span>Days
+<span id="hours">0</span>Hours
+<span id="minutes">0</span>Minutes
+<span id="seconds">0</span>Seconds
+</div>
+</div>
+
+<div class="card">
+<h2>❤️ Total Time With You ❤️</h2>
+<div class="bigCount">
+Total Minutes: <b><span id="totalMinutes">0</span></b><br><br>
+Total Seconds: <b><span id="totalSeconds">0</span></b>
+</div>
+</div>
+
+<div class="card">
+<h2>🎂 Birthday Countdown 🎂</h2>
+<div class="counter">
+<span id="bDays">0</span>Days
+<span id="bHours">0</span>Hours
+<span id="bMinutes">0</span>Minutes
+<span id="bSeconds">0</span>Seconds
+</div>
+<p id="lockText">🎁 Surprise unlocks on 5 May ❤️</p>
+</div>
+
+<!-- 🎉 BIRTHDAY LETTER -->
+<div class="card" id="birthdayLetter">
+<h2>🎉 Happy Birthday Dimple 🎉</h2>
+<p>
+Aaj sirf tumhara din nahi,<br>
+aaj wo din hai jab duniya thodi aur khoobsurat hui ❤️<br><br>
+Main hamesha tumhare saath rahunga —<br>
+aaj, kal aur hamesha 💖
+</p>
+</div>
+
+<div class="card">
+<h2>📸 Our Moments</h2>
+<div class="gallery">
+<img src="img1.jpeg">
+<img src="img2.jpeg">
+<img src="img3.jpeg">
+<img src="img4.jpeg">
+</div>
+</div>
+
+<h2>Forever Yours<br>Tanush ❤️</h2>
+
+</div>
+</div>
+
+<script>
+let music=bgm;
+function toggleMusic(){music.paused?music.play():music.pause();}
+
+function unlock(){
+ let a=answer.value.toLowerCase().trim();
+ if(a==="1 dec 24"||a==="1 december 24"){
+  content.style.display="block";
+  music.play();
+  slideshow(); counters(); hearts(); stars(); birthdayCheck();
+ }else alert("Sirf Dimple ❤️");
 }
-@keyframes fadeIn{
+
+function slideshow(){
+ let i=0,imgs=document.querySelectorAll(".gallery img");
+ imgs[0].style.opacity=1;
+ setInterval(()=>{
+  imgs.forEach(x=>x.style.opacity=0);
+  i=(i+1)%imgs.length;
+  imgs[i].style.opacity=1;
+ },3000);
+}
+
+function counters(){
+ const start=new Date("2025-01-19T01:30:00");
+ const birthday=new Date(new Date().getFullYear()+"-05-05T00:00:00");
+ setInterval(()=>{
+  let diff=Math.floor((new Date()-start)/1000);
+  days.innerText=Math.floor(diff/86400);
+  hours.innerText=Math.floor(diff%86400/3600);
+  minutes.innerText=Math.floor(diff%3600/60);
+  seconds.innerText=diff%60;
+  totalSeconds.innerText=diff;
+  totalMinutes.innerText=Math.floor(diff/60);
+
+  let bd=Math.floor((birthday-new Date())/1000);
+  if(bd>0){
+    bDays.innerText=Math.floor(bd/86400);
+    bHours.innerText=Math.floor(bd%86400/3600);
+    bMinutes.innerText=Math.floor(bd%3600/60);
+    bSeconds.innerText=bd%60;
+  }
+ },1000);
+}
+
+function birthdayCheck(){
+ const birthday=new Date(new Date().getFullYear()+"-05-05T00:00:00");
+ if(new Date()>=birthday){
+  document.getElementById("birthdayLetter").style.display="block";
+  document.getElementById("lockText").innerText="🎉 SURPRISE UNLOCKED 🎉";
+  confetti();
+ }
+}
+
+function confetti(){
+ for(let i=0;i<150;i++){
+  let c=document.createElement("div");
+  c.className="confetti";
+  c.style.left=Math.random()*100+"vw";
+  c.style.background=`hsl(${Math.random()*360},100%,50%)`;
+  c.style.animationDuration=3+Math.random()*3+"s";
+  document.body.appendChild(c);
+ }
+}
+
+function hearts(){
+ setInterval(()=>{
+  let h=document.createElement("div");
+  h.className="heart";h.innerHTML="❤️";
+  h.style.left=Math.random()*100+"vw";
+  h.style.animationDuration=4+Math.random()*4+"s";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),8000);
+ },400);
+}
+
+function stars(){
+ setInterval(()=>{
+  let s=document.createElement("div");
+  s.className="star";
+  s.style.left=Math.random()*100+"vw";
+  s.style.top=Math.random()*50+"vh";
+  document.body.appendChild(s);
+  setTimeout(()=>s.remove(),2000);
+ },1500);
+}
+</script>
+
+</body>
+</html>@keyframes fadeIn{
   from{opacity:0; transform:scale(0.8);}
   to{opacity:1; transform:scale(1);}
 }
@@ -196,7 +371,7 @@ button{
 <!-- PROMISE -->
 <div class="card">
 <h2>💍 My Promise 💍</h2>
-<p>Main kabhi door nahi jaunga.<br>Har pal tere saath ❤️</p>
+<p>Main kabhi door nahi jaunga.<br>Har pal tere saath. Main promise karta hoon ki hamesha tumhare saath rahunga, tumhe har mushkil mein support dunga, tumhari har baat dhyan se sununga, aur tumhe poore dil se aur sachche pyar se chahunga. Jo bhi ho, main hamesha tumhare liye wahan rahunga, kyunki tum meri duniya ho ❤️</p>
 </div>
 
 <!-- FUTURE -->
@@ -204,14 +379,14 @@ button{
 <h2>💌 Future Message 💌</h2>
 <p>
 Agar future me tum ye padh rahi ho,<br>
-toh yaad rakhna — main abhi bhi wahi hoon 💖
+toh yaad rakhna — main abhi bhi wahi hoon jb mene tumse kha tha r u editor mast time tha jb humne dosti ki aur ye journey start hui sachmw i love you jaan bhaut jada 💖
 </p>
 </div>
 
 <!-- HIDDEN -->
 <div class="card" id="secret">
 <h2>🐾 Hidden Message 🐾</h2>
-<p>Tum meri zindagi ka sabse khoobsurat hissa ho ❤️</p>
+<p>Tum meri zindagi ka sabse khoobsurat hissa ho mera bacha ik me jr waqt gussa krta hu but sachme me bhaut pyaar krta hu tumse  ❤️</p>
 </div>
 
 <h2>Forever Yours,<br>Tanush ❤️</h2>
@@ -233,7 +408,7 @@ function unlock(){
    startCounter();
    hearts();
    stars();
- }else alert("Sirf Dimple jaanti hai 😉");
+ }else alert("Sirf Dimple jaanti hai 😑");
 }
 
 // Slideshow
