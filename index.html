@@ -126,6 +126,44 @@ button{
 @keyframes floatUp{
   to{transform:translateY(-120vh);}
 }
+/* 🎂 BIRTHDAY POPUP */
+#birthdayPopup{
+  position:fixed;
+  bottom:4vw;
+  left:4vw;
+  background:rgba(0,0,0,0.6);
+  backdrop-filter:blur(8px);
+  border-radius:5vw;
+  padding:4vw;
+  width:75vw;
+  max-width:280px;
+  box-shadow:0 0 20px rgba(255,105,135,0.6);
+  z-index:200;
+  animation:popIn 1.2s ease;
+}
+
+@keyframes popIn{
+  from{transform:translateY(40px); opacity:0;}
+  to{transform:translateY(0); opacity:1;}
+}
+
+#birthdayPopup h3{
+  margin:0;
+  font-size:5vw;
+  color:#ffb3c1;
+}
+
+#birthdayPopup p{
+  margin:2vw 0 0;
+  font-size:4vw;
+}
+
+#bdayTimer{
+  margin-top:2vw;
+  font-size:4vw;
+  font-weight:bold;
+  color:#fff;
+}
 
 /* SHOOTING STARS */
 .star{
@@ -218,6 +256,12 @@ toh yaad rakhna — main abhi bhi wahi hoon jb hum mile the aur mene pucha tha r
 
 </div>
 </div>
+<!-- 🎉 BIRTHDAY POPUP -->
+<div id="birthdayPopup">
+  <h3>🎂 Birthday Countdown</h3>
+  <p>5 May 💖</p>
+  <div id="bdayTimer">Loading...</div>
+</div>
 
 <script>
 let music=document.getElementById("bgm");
@@ -290,7 +334,34 @@ function stars(){
   document.body.appendChild(s);
   setTimeout(()=>s.remove(),2000);
  },1500);
+} 
+  /* 🎂 BIRTHDAY COUNTDOWN */
+function birthdayCountdown(){
+  const now = new Date();
+  let year = now.getFullYear();
+  let birthday = new Date(year + "-05-05T00:00:00");
+
+  if(now > birthday){
+    birthday = new Date((year + 1) + "-05-05T00:00:00");
+  }
+
+  setInterval(()=>{
+    let diff = Math.floor((birthday - new Date()) / 1000);
+
+    let days = Math.floor(diff / 86400);
+    diff %= 86400;
+    let hours = Math.floor(diff / 3600);
+    diff %= 3600;
+    let minutes = Math.floor(diff / 60);
+    let seconds = diff % 60;
+
+    document.getElementById("bdayTimer").innerHTML =
+      `${days}d ${hours}h ${minutes}m ${seconds}s`;
+  },1000);
 }
+
+birthdayCountdown();
+
 </script>
 
 </body>
