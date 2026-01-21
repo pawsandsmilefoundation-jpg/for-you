@@ -241,7 +241,7 @@ button{
   left:0;
   width:100%;
   height:100%;
-  background:rgba(0,0,0,0.9);
+  background:rgba(0,0,0,0.8);
   display:none;
   justify-content:center;
   align-items:center;
@@ -256,13 +256,12 @@ button{
 }
 
 .diaryBox{
-  background:#fff0f8;
+  background:white;
   color:black;
   width:90%;
   max-width:420px;
   border-radius:20px;
   padding:15px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.4);
 }
 
 .diaryBox textarea{
@@ -271,8 +270,6 @@ button{
   padding:10px;
   border-radius:10px;
   font-size:15px;
-  resize:none;
-  border:1px solid #ffb3c1;
 }
 
 .diaryEntry{
@@ -296,6 +293,19 @@ button{
 #oldEntries{
   max-height:200px;
   overflow-y:auto;
+}
+
+/* LIST BUTTON */
+#listBtn{
+  margin-top:5px;
+  padding:5px 10px;
+  background:#ffb3c1;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+}
+#dateList div:hover{
+  background:#ffe4f0;
 }
 </style>
 </head>
@@ -391,11 +401,13 @@ toh yaad rakhna — main abhi bhi wahi hoon jb hum mile the aur mene pucha tha r
 
 <div id="panda" style="display:none">🐼</div>
 
-<!-- 📔 REAL DIARY PAGE -->
+<!-- 📔 DIARY PAGE -->
 <div id="diaryPage">
   <div class="diaryBox">
     <h3>📔 Personal Diary</h3>
     <p id="todayDate"></p>
+    <button id="listBtn">📖 List</button>
+    <div id="dateList" style="display:none; max-height:150px; overflow-y:auto; border:1px solid #ffb3c1; margin:5px 0; border-radius:10px; background:#fff0f8; padding:5px;"></div>
     <textarea id="diaryText" placeholder="Aaj jo dil me hai likho..."></textarea>
     <input type="file" id="diaryPhoto" accept="image/*">
     <button onclick="saveDiary()">Save</button>
@@ -427,17 +439,11 @@ let slide=0;
 function startSlideshow(){
  let imgs=document.querySelectorAll(".gallery img");
  imgs[0].style.opacity=1;
- setInterval(()=>{
-  imgs.forEach(i=>i.style.opacity=0);
-  slide=(slide+1)%imgs.length;
-  imgs[slide].style.opacity=1;
- },3000);
+ setInterval(()=>{ imgs.forEach(i=>i.style.opacity=0); slide=(slide+1)%imgs.length; imgs[slide].style.opacity=1; },3000);
 }
 
 // Hidden message
-function openSecret(){
- document.getElementById("secret").style.display="block";
-}
+function openSecret(){ document.getElementById("secret").style.display="block"; }
 
 // Counter
 function startCounter(){
@@ -476,7 +482,7 @@ function stars(){
   document.body.appendChild(s);
   setTimeout(()=>s.remove(),2000);
  },1500);
-}
+} 
 
 /* 🎂 BIRTHDAY COUNTDOWN */
 function birthdayCountdown(){
@@ -524,7 +530,7 @@ function specialEffects(){
  const m=d.getMonth()+1;
  const day=d.getDate();
  if(m===2 && day===10){ document.getElementById("panda").style.display="block"; }
- if(m===2 && day===14){ document.getElementById("valentineSecret").style.display="block"; confetti(); }
+ if(m===2 && day===14){ confetti(); }
  if(m===5 && day===5){ confetti(); }
 }
 function confetti(){
@@ -541,33 +547,27 @@ function confetti(){
 specialEffects();
 
 /* 📔 REAL DIARY SYSTEM */
-const diaryPage = document.getElementById("diaryPage");
-const oldEntries = document.getElementById("oldEntries");
+const diaryPageEl = document.getElementById("diaryPage");
+const oldEntriesEl = document.getElementById("oldEntries");
 const todayDateEl = document.getElementById("todayDate");
-let diaryEntries = [];
+const listBtnEl = document.getElementById("listBtn");
+const dateListEl = document.getElementById("dateList");
+let diaryEntriesArr = [];
 let currentIndex = 0;
 
 function openDiary(){
   let author = prompt("Kaun diary likh raha hai? Tanush / Dimple 💖").trim();
-  if(author !== "Tanush" && author !== "Dimple"){
-    alert("Sirf Tanush ya Dimple hi likh sakte hain 💌");
-    return;
-  }
+  if(author !== "Tanush" && author !== "Dimple"){ alert("Sirf Tanush ya Dimple hi likh sakte hain 💌"); return; }
 
   let p = prompt("Diary password 💖");
   if(p !== "dimple"){ alert("Wrong password ❌"); return; }
 
-  diaryPage.style.display = "flex";
-  setTimeout(()=> diaryPage.classList.add("pageOpen"), 50);
+  diaryPageEl.style.display = "flex";
+  setTimeout(()=> diaryPageEl.classList.add("pageOpen"), 50);
 
-  diaryEntries = JSON.parse(localStorage.getItem("diary") || "[]");
+  diaryEntriesArr = JSON.parse(localStorage.getItem("diary") || "[]");
   currentIndex = 0;
   loadDiary(author);
-}
-
-function closeDiary(){
-  diaryPage.classList.remove("pageOpen");
-  setTimeout(()=> diaryPage.style.display="none", 700);
 }
 
 function saveDiary(){
@@ -578,61 +578,69 @@ function saveDiary(){
   let photo = "";
   if(photoInput.files && photoInput.files[0]){
     let reader = new FileReader();
-    reader.onload = function(e){ 
-      photo = e.target.result;
-      pushDiaryEntry(text, photo); 
-    };
+    reader.onload = function(e){ photo = e.target.result; pushDiaryEntry(text, photo); };
     reader.readAsDataURL(photoInput.files[0]);
-  } else {
-    pushDiaryEntry(text, photo);
-  }
+  } else { pushDiaryEntry(text, photo); }
 }
 
 function pushDiaryEntry(text, photo){
   let d = new Date().toDateString();
   let author = prompt("Enter Author Again (Tanush/Dimple) 💖") || "Unknown";
   let diary = JSON.parse(localStorage.getItem("diary") || "[]");
-  diary.unshift({date: d, author, text, photo});
+  diary.unshift({date:d, author, text, photo});
   localStorage.setItem("diary", JSON.stringify(diary));
   document.getElementById("diaryText").value = "";
   document.getElementById("diaryPhoto").value = "";
-  diaryEntries = diary;
+  diaryEntriesArr = diary;
   currentIndex = 0;
   loadDiary(author);
 }
 
 function loadDiary(author){
   todayDateEl.innerText = "📅 " + new Date().toDateString();
-  oldEntries.innerHTML = "";
+  oldEntriesEl.innerHTML = "";
+  dateListEl.innerHTML = "";
 
-  diaryEntries.forEach((entry,i)=>{
+  diaryEntriesArr.forEach((entry,i)=>{
     const div = document.createElement("div");
     div.className = "diaryEntry";
     if(i === currentIndex) div.classList.add("active");
-    div.innerHTML = `<b>${entry.date} - ${entry.author}</b><br><br>${entry.text}` + (entry.photo ? `<br><img src="${entry.photo}" style="width:100%; margin-top:10px; border-radius:10px;">` : "");
-    oldEntries.appendChild(div);
-  });
+    div.innerHTML = `<b>${entry.date} - ${entry.author}</b><br><br>${entry.text}` + (entry.photo?`<br><img src="${entry.photo}" style="width:100%; margin-top:10px; border-radius:10px;">`:"");
+    oldEntriesEl.appendChild(div);
 
-  let entries = document.querySelectorAll(".diaryEntry");
-  let startX = 0;
-  oldEntries.ontouchstart = (e)=>{ startX = e.touches[0].clientX; };
-  oldEntries.ontouchend = (e)=>{
-    let endX = e.changedTouches[0].clientX;
-    if(endX < startX - 50){
-      if(currentIndex < entries.length - 1){
-        entries[currentIndex].classList.remove("active");
-        currentIndex++;
-        entries[currentIndex].classList.add("active");
-      }
-    } else if(endX > startX + 50){
-      if(currentIndex > 0){
-        entries[currentIndex].classList.remove("active");
-        currentIndex--;
-        entries[currentIndex].classList.add("active");
-      }
-    }
-  };
+    // populate list
+    const dBtn = document.createElement("div");
+    dBtn.style.padding="5px";
+    dBtn.style.cursor="pointer";
+    dBtn.style.borderBottom="1px solid #ffb3c1";
+    dBtn.innerText = entry.date + " - " + entry.author;
+    dBtn.onclick = ()=>{ currentIndex=i; updateActiveEntry(); dateListEl.style.display="none"; };
+    dateListEl.appendChild(dBtn);
+  });
 }
+
+function updateActiveEntry(){
+  const entries = document.querySelectorAll(".diaryEntry");
+  entries.forEach(e=>e.classList.remove("active"));
+  if(entries[currentIndex]) entries[currentIndex].classList.add("active");
+}
+
+listBtnEl.onclick = ()=>{ dateListEl.style.display = dateListEl.style.display==="none"?"block":"none"; }
+
+function closeDiary(){
+  diaryPageEl.classList.remove("pageOpen");
+  setTimeout(()=> diaryPageEl.style.display="none",700);
+}
+
+// Swipe support
+let startX = 0;
+oldEntriesEl.ontouchstart = (e)=>{ startX = e.touches[0].clientX; };
+oldEntriesEl.ontouchend = (e)=>{
+  let endX = e.changedTouches[0].clientX;
+  if(endX < startX - 50){ if(currentIndex<diaryEntriesArr.length-1){ currentIndex++; updateActiveEntry(); } }
+  else if(endX > startX + 50){ if(currentIndex>0){ currentIndex--; updateActiveEntry(); } }
+};
 </script>
+
 </body>
 </html>
