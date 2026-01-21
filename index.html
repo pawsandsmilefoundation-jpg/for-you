@@ -178,8 +178,39 @@ button{
   from{transform:translate(0,0);}
   to{transform:translate(-400px,400px); opacity:0;}
 }
+  /* 💖 LOVE DAY POPUP */
+#lovePopup{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  background:rgba(0,0,0,0.75);
+  backdrop-filter:blur(12px);
+  border-radius:6vw;
+  padding:6vw;
+  width:85vw;
+  max-width:320px;
+  text-align:center;
+  z-index:999;
+  box-shadow:0 0 30px rgba(255,105,135,0.7);
+  animation:fadeIn 1s ease;
+}
+#lovePopup h2{
+  margin:0;
+  color:#ffb3c1;
+}
+#lovePopup button{
+  margin-top:4vw;
+}
+
 </style>
 </head>
+<!-- 💖 LOVE DAY POPUP -->
+<div id="lovePopup" style="display:none">
+  <h2 id="loveTitle"></h2>
+  <p id="loveMsg"></p>
+  <button onclick="closeLove()">Close ❤️</button>
+</div>
 
 <body>
 
@@ -361,6 +392,36 @@ function birthdayCountdown(){
 }
 
 birthdayCountdown();
+  /* 💖 LOVE DAYS SYSTEM */
+const loveDays = {
+ "02-07": ["🌹 Rose Day", "Aaj Rose Day hai 🌹\nJaise rose special hota hai, waise hi tum ❤️"],
+ "02-08": ["💍 Propose Day", "Aaj Propose Day 💍\nMain roz tumhe choose karta hoon ❤️"],
+ "02-09": ["🍫 Chocolate Day", "Chocolate sweet hoti hai 🍫\nPar tum usse bhi zyada ❤️"],
+ "02-10": ["🧸 Teddy Day", "Aaj Teddy Day 🧸\nTum mera comfort ho ❤️"],
+ "02-11": ["🤞 Promise Day", "Aaj Promise Day 🤞\nMain kabhi tumhara saath nahi chhodunga ❤️"],
+ "02-12": ["🤗 Hug Day", "Ek tight hug tumhare liye 🤗❤️"],
+ "02-13": ["💋 Kiss Day", "Aaj Kiss Day 💋\nFeelings bina bole samajhne ka din ❤️"],
+ "02-14": ["❤️ Valentine’s Day", "Happy Valentine’s Day ❤️\nTum meri hamesha wali Valentine ho 💖"]
+};
+
+function checkLoveDay(){
+  const now = new Date();
+  const key = String(now.getMonth()+1).padStart(2,'0') + "-" +
+              String(now.getDate()).padStart(2,'0');
+
+  if(loveDays[key]){
+    document.getElementById("loveTitle").innerText = loveDays[key][0];
+    document.getElementById("loveMsg").innerText = loveDays[key][1];
+    document.getElementById("lovePopup").style.display="block";
+  }
+}
+
+function closeLove(){
+  document.getElementById("lovePopup").style.display="none";
+}
+
+checkLoveDay();
+
 
 </script>
 
