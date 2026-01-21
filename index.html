@@ -156,7 +156,7 @@ button{
 <p>Ye website normal nahi… ye meri feelings hai 🌙</p>
 
 <p><b>Question:</b> Hum pehli baar kab mile the?</p>
-<input id="answer" placeholder="1 dec 24"><br>
+<input id="answer" type="password" placeholder="Enter password 💖">
 <button onclick="unlock()">Enter 💖</button>
 
 <div id="content" style="display:none">
@@ -226,7 +226,7 @@ function toggleMusic(){music.paused?music.play():music.pause();}
 // Unlock
 function unlock(){
  let a=document.getElementById("answer").value.toLowerCase().trim();
- if(a==="1 dec 24"||a==="1 december 24"){
+ if(a==="01/12/2024"||a==="1 december 24"){
    document.getElementById("content").style.display="block";
    music.play();
    startSlideshow();
