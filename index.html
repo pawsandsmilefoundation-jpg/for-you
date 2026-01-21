@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
+
 body{
   margin:0;
   font-family:'Segoe UI',sans-serif;
@@ -202,6 +203,19 @@ button{
 #lovePopup button{
   margin-top:4vw;
 }
+/* 🐼 PANDA */
+#panda{
+  position:fixed;
+  bottom:-200px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:40vw;
+  animation:pandaUp 3s ease forwards;
+  z-index:998;
+}
+@keyframes pandaUp{
+  to{bottom:-5vw;}
+}
 
 </style>
 </head>
@@ -211,6 +225,7 @@ button{
   <p id="loveMsg"></p>
   <button onclick="closeLove()">Close ❤️</button>
 </div>
+<div id="panda" style="display:none">🐼</div>
 
 <body>
 
@@ -292,6 +307,23 @@ toh yaad rakhna — main abhi bhi wahi hoon jb hum mile the aur mene pucha tha r
   <h3>🎂 Birthday Countdown</h3>
   <p>5 May 💖</p>
   <div id="bdayTimer">Loading...</div>
+</div>
+/* 💥 CONFETTI */
+.confetti{
+  position:fixed;
+  top:-10vh;
+  font-size:5vw;
+  animation:fall 4s linear infinite;
+}
+@keyframes fall{
+  to{transform:translateY(120vh) rotate(360deg);}
+}
+<div class="card" id="valentineSecret" style="display:none">
+  <h2>🎁 Valentine Special 🎁</h2>
+  <p>
+  Tum sirf meri Valentine nahi ho ❤️<br>
+  Tum meri aadat, meri dua aur mera future ho 💖
+  </p>
 </div>
 
 <script>
@@ -422,6 +454,43 @@ function closeLove(){
 
 checkLoveDay();
 
+/* 🎉 SPECIAL DAYS EFFECTS */
+function specialEffects(){
+ const d=new Date();
+ const m=d.getMonth()+1;
+ const day=d.getDate();
+
+ /* 🐼 TEDDY DAY */
+ if(m===2 && day===10){
+   document.getElementById("panda").style.display="block";
+ }
+
+ /* 🎁 VALENTINE DAY */
+ if(m===2 && day===14){
+   document.getElementById("valentineSecret").style.display="block";
+   confetti();
+ }
+
+ /* 🎂 BIRTHDAY 5 MAY */
+ if(m===5 && day===5){
+   confetti();
+ }
+}
+
+/* 💥 CONFETTI FUNCTION */
+function confetti(){
+ setInterval(()=>{
+  let c=document.createElement("div");
+  c.className="confetti";
+  c.innerHTML=["🎉","💖","✨","🎈","❤️"][Math.floor(Math.random()*5)];
+  c.style.left=Math.random()*100+"vw";
+  c.style.animationDuration=3+Math.random()*3+"s";
+  document.body.appendChild(c);
+  setTimeout(()=>c.remove(),6000);
+ },300);
+}
+
+specialEffects();
 
 </script>
 
