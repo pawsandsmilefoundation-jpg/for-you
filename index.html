@@ -6,19 +6,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-*{box-sizing:border-box}
-
 body{
   margin:0;
   font-family:'Segoe UI',sans-serif;
   color:white;
   background:url('img1.jpeg') repeat;
   background-size:cover;
-  animation:bgMove 120s linear infinite;
+  animation:bgMove 80s linear infinite;
   overflow-x:hidden;
 }
 @keyframes bgMove{
-  to{background-position:-4000px 0;}
+  from{background-position:0 0;}
+  to{background-position:-3000px 0;}
 }
 
 .container{
@@ -26,74 +25,97 @@ body{
   text-align:center;
 }
 
+/* CARD */
 .card{
-  background:rgba(0,0,0,0.65);
-  backdrop-filter:blur(14px);
+  background:rgba(0,0,0,0.45);
+  backdrop-filter:blur(8px);
   border-radius:6vw;
   padding:6vw;
   margin:10vw auto;
-  max-width:96%;
-  box-shadow:0 0 35px rgba(0,0,0,0.6);
+  max-width:92%;
+  box-shadow:0 0 30px rgba(0,0,0,0.6);
 }
 
-h1,h2{margin-top:0}
-
-input{
-  padding:3.5vw;
-  border-radius:10vw;
-  border:none;
-  width:80%;
-  font-size:4.2vw;
-  text-align:center;
-}
-button{
-  padding:3vw 7vw;
-  border:none;
-  border-radius:10vw;
-  font-size:4vw;
-  background:white;
-  color:#ff4d6d;
-  margin-top:4vw;
-}
-
-#musicBtn{
-  position:fixed;
-  top:4vw;
-  right:4vw;
-  border-radius:10vw;
-  padding:2.5vw 5vw;
-  z-index:999;
-}
-
-/* GALLERY */
+/* GALLERY – NO OVERLAP */
 .gallery{
-  width:100%;
-  height:85vw;
-  max-height:520px;
-  margin-top:5vw;
   position:relative;
+  width:100%;
+  height:60vw;
+  max-height:320px;
   overflow:hidden;
   border-radius:5vw;
+  margin-top:4vw;
 }
 .gallery img{
   width:100%;
   height:100%;
-  object-fit:contain;
+  object-fit:cover;
   position:absolute;
+  top:0; left:0;
   opacity:0;
-  transition:opacity 1.2s;
-  background:rgba(0,0,0,0.4);
+  transition:opacity 1.2s ease-in-out;
 }
 
-/* COUNTERS */
+/* COUNTER */
+.counter{
+  margin-top:4vw;
+  font-size:4.5vw;
+}
 .counter span{
   display:block;
-  font-size:7vw;
+  font-size:6.5vw;
   font-weight:bold;
   color:#ffb3c1;
 }
 
-/* EFFECTS */
+/* INPUT + BUTTON */
+input{
+  padding:3vw;
+  border-radius:10vw;
+  border:none;
+  width:65%;
+  text-align:center;
+  font-size:4vw;
+}
+button{
+  padding:3vw 6vw;
+  border:none;
+  border-radius:10vw;
+  font-size:4vw;
+  cursor:pointer;
+  background:white;
+  color:#ff4d6d;
+  margin-top:3vw;
+}
+
+/* MUSIC BUTTON */
+#musicBtn{
+  position:fixed;
+  top:4vw;
+  right:4vw;
+  padding:2.5vw 4vw;
+  border-radius:10vw;
+  border:none;
+  z-index:100;
+}
+
+/* PAW */
+.paw{
+  font-size:10vw;
+  cursor:pointer;
+}
+
+/* HIDDEN MESSAGE */
+#secret{
+  display:none;
+  animation:fadeIn 1s ease;
+}
+@keyframes fadeIn{
+  from{opacity:0; transform:scale(0.8);}
+  to{opacity:1; transform:scale(1);}
+}
+
+/* FLOATING HEARTS */
 .heart{
   position:fixed;
   bottom:-10vh;
@@ -105,15 +127,18 @@ button{
   to{transform:translateY(-120vh);}
 }
 
+/* SHOOTING STARS */
 .star{
   position:fixed;
   width:2px;
   height:80px;
   background:linear-gradient(white,transparent);
   animation:shoot 2s linear infinite;
+  opacity:0.8;
 }
 @keyframes shoot{
-  to{transform:translate(-400px,400px);opacity:0;}
+  from{transform:translate(0,0);}
+  to{transform:translate(-400px,400px); opacity:0;}
 }
 </style>
 </head>
@@ -128,181 +153,32 @@ button{
 <div class="container">
 
 <h1>Hey ❤️</h1>
-<p>Meri feelings… meri duniya 🌙</p>
+<p>Ye website simple nahi… ye meri feelings hai 🌙</p>
 
 <p><b>Question:</b> Hum pehli baar kab mile the?</p>
-
-<!-- PASSWORD HIDDEN -->
-<input id="answer" type="password" placeholder="Password 💖"><br>
-<button onclick="unlock()">Enter 💖</button>
-
-<div id="content" style="display:none">
-
-<div class="card">
-<h2>Happy Anniversary Dimple ❤️</h2>
-<p>
-<b>1 December 2024</b> — jab hum mile ✨<br><br>
-<b>19 January · 1:30 AM</b> — jab baatein feelings bani 💫
-</p>
-</div>
-
-<div class="card">
-<h2>⏳ Time Together ⏳</h2>
-<div class="counter">
-<span id="days">0</span>Days
-<span id="hours">0</span>Hours
-<span id="minutes">0</span>Minutes
-<span id="seconds">0</span>Seconds
-</div>
-</div>
-
-<div class="card">
-<h2 style="margin-bottom:4vw;">📸 Our Moments 📸</h2>
-<div class="gallery">
-<img src="img1.jpeg">
-<img src="img2.jpeg">
-<img src="img3.jpeg">
-<img src="img4.jpeg">
-</div>
-</div>
-
-<div class="card">
-<h2>💍 My Promise 💍</h2>
-<p>
-Main kabhi door nahi jaunga ❤️<br>
-Har pal tere saath rahunga.
-</p>
-</div>
-
-<div class="card">
-<h2>💌 Future Message 💌</h2>
-<p>
-Agar future me tum ye padh rahi ho,<br>
-toh yaad rakhna — main tab bhi tumhara hi hoon 💖
-</p>
-</div>
-
-<h2>Forever Yours<br>Tanush ❤️</h2>
-
-</div>
-</div>
-
-<script>
-let music=document.getElementById("bgm");
-function toggleMusic(){
-  music.paused ? music.play() : music.pause();
-}
-
-function unlock(){
-  let a=document.getElementById("answer").value.toLowerCase().trim();
-  if(a==="1 dec 24"||a==="1 december 24"){
-    document.getElementById("content").style.display="block";
-    music.play();
-    slideshow();
-    counter();
-    hearts();
-    stars();
-  }else{
-    alert("Sirf Dimple ❤️");
-  }
-}
-
-function slideshow(){
-  let i=0;
-  let imgs=document.querySelectorAll(".gallery img");
-  imgs[0].style.opacity=1;
-  setInterval(()=>{
-    imgs.forEach(img=>img.style.opacity=0);
-    i=(i+1)%imgs.length;
-    imgs[i].style.opacity=1;
-  },3000);
-}
-
-function counter(){
-  const start=new Date("2025-01-19T01:30:00");
-  setInterval(()=>{
-    let diff=Math.floor((new Date()-start)/1000);
-    days.innerText=Math.floor(diff/86400);
-    hours.innerText=Math.floor(diff%86400/3600);
-    minutes.innerText=Math.floor(diff%3600/60);
-    seconds.innerText=diff%60;
-  },1000);
-}
-
-function hearts(){
-  setInterval(()=>{
-    let h=document.createElement("div");
-    h.className="heart";
-    h.innerHTML="❤️";
-    h.style.left=Math.random()*100+"vw";
-    h.style.animationDuration=4+Math.random()*4+"s";
-    document.body.appendChild(h);
-    setTimeout(()=>h.remove(),8000);
-  },450);
-}
-
-function stars(){
-  setInterval(()=>{
-    let s=document.createElement("div");
-    s.className="star";
-    s.style.left=Math.random()*100+"vw";
-    s.style.top=Math.random()*50+"vh";
-    document.body.appendChild(s);
-    setTimeout(()=>s.remove(),2000);
-  },1500);
-}
-</script>
-
-</body>
-</html>  <source src="song.mp3" type="audio/mpeg">
-</audio>
-<button id="musicBtn" onclick="toggleMusic()">Play / Pause</button>
-
-<div class="container">
-
-<h1>Hey ❤️</h1>
-<p>Ye sirf website nahi… meri feelings hai 🌙</p>
-
 <input id="answer" placeholder="1 dec 24"><br>
 <button onclick="unlock()">Enter 💖</button>
 
 <div id="content" style="display:none">
 
+<!-- ANNIVERSARY -->
 <div class="card">
 <h2>Happy Anniversary Dimple ❤️</h2>
-<div class="paw" onclick="secret.style.display='block'">🐾</div>
-<p><b>1 December 2024</b><br><b>19 January · 1:30 AM</b></p>
+<div class="paw" onclick="openSecret()">🐾</div>
+<p>
+<b>1 December 2024</b> — jab sab kuch special bana ✨<br><br>
+<b>19 January · 1:30 AM</b> — jab main tumhara hua 💫
+</p>
 </div>
 
-<!-- RELATION COUNTER -->
+<!-- COUNTER -->
 <div class="card">
-<h2>⏳ Time Together ⏳</h2>
+<h2>⏳ Time Since We Fell in Love ⏳</h2>
 <div class="counter">
-<span id="days">0</span>Days
-<span id="hours">0</span>Hours
-<span id="minutes">0</span>Minutes
-<span id="seconds">0</span>Seconds
-</div>
-</div>
-
-<!-- TOTAL COUNT -->
-<div class="card">
-<h2>❤️ Total Time With You ❤️</h2>
-<div class="bigCount">
-Total Minutes: <b><span id="totalMinutes">0</span></b><br><br>
-Total Seconds: <b><span id="totalSeconds">0</span></b>
-</div>
-</div>
-
-<!-- 🎂 BIRTHDAY COUNTDOWN -->
-<div class="card">
-<h2>🎂 Birthday Countdown 🎂</h2>
-<p>Counting every second till <b>5 May</b> 💖</p>
-<div class="counter">
-<span id="bDays">0</span>Days
-<span id="bHours">0</span>Hours
-<span id="bMinutes">0</span>Minutes
-<span id="bSeconds">0</span>Seconds
+<span id="days">0</span> Days
+<span id="hours">0</span> Hours
+<span id="minutes">0</span> Minutes
+<span id="seconds">0</span> Seconds
 </div>
 </div>
 
@@ -317,76 +193,86 @@ Total Seconds: <b><span id="totalSeconds">0</span></b>
 </div>
 </div>
 
+<!-- PROMISE -->
 <div class="card">
-<h2>💍 My Promise</h2>
-<p>Main kabhi door nahi jaunga ❤️<br>Har pal tere saath</p>
+<h2>💍 My Promise 💍</h2>
+<p>Main kabhi door nahi jaunga.<br>Har pal tere saath ❤️</p>
 </div>
 
+<!-- FUTURE -->
 <div class="card">
-<h2>💌 Future Message</h2>
-<p>Agar future me tum ye padh rahi ho,<br>main tab bhi tumhara hoon 💖</p>
+<h2>💌 Future Message 💌</h2>
+<p>
+Agar future me tum ye padh rahi ho,<br>
+toh yaad rakhna — main abhi bhi wahi hoon 💖
+</p>
 </div>
 
+<!-- HIDDEN -->
 <div class="card" id="secret">
-<h2>🐾 Hidden Message</h2>
-<p>Tum meri zindagi ho ❤️</p>
+<h2>🐾 Hidden Message 🐾</h2>
+<p>Tum meri zindagi ka sabse khoobsurat hissa ho ❤️</p>
 </div>
 
-<h2>Forever Yours<br>Tanush ❤️</h2>
+<h2>Forever Yours,<br>Tanush ❤️</h2>
 
 </div>
 </div>
 
 <script>
-let music=bgm;
+let music=document.getElementById("bgm");
 function toggleMusic(){music.paused?music.play():music.pause();}
 
+// Unlock
 function unlock(){
- let a=answer.value.toLowerCase().trim();
+ let a=document.getElementById("answer").value.toLowerCase().trim();
  if(a==="1 dec 24"||a==="1 december 24"){
-  content.style.display="block";
-  music.play();
-  slideshow(); counters(); hearts(); stars();
- }else alert("Sirf Dimple ❤️");
+   document.getElementById("content").style.display="block";
+   music.play();
+   startSlideshow();
+   startCounter();
+   hearts();
+   stars();
+ }else alert("Sirf Dimple jaanti hai 😉");
 }
 
-function slideshow(){
- let i=0,imgs=document.querySelectorAll(".gallery img");
+// Slideshow
+let slide=0;
+function startSlideshow(){
+ let imgs=document.querySelectorAll(".gallery img");
  imgs[0].style.opacity=1;
  setInterval(()=>{
-  imgs.forEach(x=>x.style.opacity=0);
-  i=(i+1)%imgs.length;
-  imgs[i].style.opacity=1;
+  imgs.forEach(i=>i.style.opacity=0);
+  slide=(slide+1)%imgs.length;
+  imgs[slide].style.opacity=1;
  },3000);
 }
 
-function counters(){
- const start=new Date("2025-01-19T01:30:00");
- const birthday=new Date(new Date().getFullYear()+"-05-05T00:00:00");
+// Hidden message
+function openSecret(){
+ document.getElementById("secret").style.display="block";
+}
 
+// Counter
+function startCounter(){
+ const start=new Date("2025-01-19T01:30:00");
  setInterval(()=>{
   let diff=Math.floor((new Date()-start)/1000);
-  days.innerText=Math.floor(diff/86400);
-  hours.innerText=Math.floor(diff%86400/3600);
-  minutes.innerText=Math.floor(diff%3600/60);
-  seconds.innerText=diff%60;
-  totalSeconds.innerText=diff;
-  totalMinutes.innerText=Math.floor(diff/60);
-
-  let bd=Math.floor((birthday-new Date())/1000);
-  if(bd>0){
-    bDays.innerText=Math.floor(bd/86400);
-    bHours.innerText=Math.floor(bd%86400/3600);
-    bMinutes.innerText=Math.floor(bd%3600/60);
-    bSeconds.innerText=bd%60;
-  }
+  document.getElementById("days").innerText=Math.floor(diff/86400);
+  diff%=86400;
+  document.getElementById("hours").innerText=Math.floor(diff/3600);
+  diff%=3600;
+  document.getElementById("minutes").innerText=Math.floor(diff/60);
+  document.getElementById("seconds").innerText=diff%60;
  },1000);
 }
 
+// Hearts
 function hearts(){
  setInterval(()=>{
   let h=document.createElement("div");
-  h.className="heart";h.innerHTML="❤️";
+  h.className="heart";
+  h.innerHTML="❤️";
   h.style.left=Math.random()*100+"vw";
   h.style.animationDuration=4+Math.random()*4+"s";
   document.body.appendChild(h);
@@ -394,6 +280,7 @@ function hearts(){
  },400);
 }
 
+// Shooting stars
 function stars(){
  setInterval(()=>{
   let s=document.createElement("div");
