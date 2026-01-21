@@ -280,6 +280,10 @@ button{
   margin-bottom:4vw;
   box-shadow:0 10px 25px rgba(0,0,0,.4);
   animation:pageFlip .6s ease;
+  display:none;
+}
+.diaryEntry.active{
+  display:block;
 }
 @keyframes pageFlip{
   from{transform:rotateY(-90deg);opacity:0;}
@@ -536,39 +540,79 @@ function confetti(){
 }
 specialEffects();
 
-/* 📔 DIARY SYSTEM */
-const diaryPage=document.getElementById("diaryPage");
-const todayDate=document.getElementById("todayDate");
-const oldEntries=document.getElementById("oldEntries");
+/* 📔 UPDATED DIARY SYSTEM */
+const oldEntries = document.getElementById("oldEntries");
+const todayDateEl = document.getElementById("todayDate");
+let currentIndex = 0;
 
 function openDiary(){
- let p=prompt("Diary password 💖");
- if(p!=="dimple"){ alert("Wrong password ❌"); return; }
- diaryPage.style.display="flex";
- diaryPage.classList.add("pageOpen");
- loadDiary();
+  let author = prompt("Kaun diary likh raha hai? Tanush / Dimple 💖").trim();
+  if(author !== "Tanush" && author !== "Dimple"){
+    alert("Sirf Tanush ya Dimple hi likh sakte hain 💌");
+    return;
+  }
+  localStorage.setItem("diaryAuthor", author);
+
+  let p = prompt("Diary password 💖");
+  if(p !== "dimple"){ alert("Wrong password ❌"); return; }
+
+  diaryPage.style.display = "flex";
+  setTimeout(()=> diaryPage.classList.add("pageOpen"), 50);
+  loadDiary();
 }
+
 function closeDiary(){
- diaryPage.classList.remove("pageOpen");
- setTimeout(()=>diaryPage.style.display="none",700);
+  diaryPage.classList.remove("pageOpen");
+  setTimeout(()=> diaryPage.style.display="none", 700);
 }
+
 function saveDiary(){
- let t=document.getElementById("diaryText").value.trim();
- if(t===""){ alert("Kuch toh likho ❤️"); return; }
- let d=new Date().toDateString();
- let diary=JSON.parse(localStorage.getItem("diary")||"[]");
- diary.unshift({d,t});
- localStorage.setItem("diary",JSON.stringify(diary));
- document.getElementById("diaryText").value="";
- loadDiary();
+  let t = document.getElementById("diaryText").value.trim();
+  if(t===""){ alert("Kuch toh likho ❤️"); return; }
+
+  let d = new Date().toDateString();
+  let author = localStorage.getItem("diaryAuthor") || "Unknown";
+
+  let diary = JSON.parse(localStorage.getItem("diary") || "[]");
+  diary.unshift({date: d, text: t, author});
+  localStorage.setItem("diary",JSON.stringify(diary));
+
+  document.getElementById("diaryText").value = "";
+  loadDiary();
 }
+
 function loadDiary(){
- todayDate.innerText=new Date().toDateString();
- let diary=JSON.parse(localStorage.getItem("diary")||"[]");
- oldEntries.innerHTML="";
- diary.forEach(e=>{
-   oldEntries.innerHTML+=`<div class="diaryEntry"><b>${e.d}</b><br><br>${e.t}</div>`;
- });
+  todayDateEl.innerText = "📅 " + new Date().toDateString();
+  let diary = JSON.parse(localStorage.getItem("diary") || "[]");
+  oldEntries.innerHTML = "";
+
+  diary.forEach((e, i)=>{
+    const div = document.createElement("div");
+    div.className = "diaryEntry";
+    if(i === currentIndex) div.classList.add("active");
+    div.innerHTML = `<b>${e.date} - ${e.author}</b><br><br>${e.text}`;
+    oldEntries.appendChild(div);
+  });
+
+  const entries = document.querySelectorAll(".diaryEntry");
+  let startX = 0;
+  oldEntries.ontouchstart = (e)=>{ startX = e.touches[0].clientX; };
+  oldEntries.ontouchend = (e)=>{
+    let endX = e.changedTouches[0].clientX;
+    if(endX < startX - 50){
+      if(currentIndex < entries.length - 1){
+        entries[currentIndex].classList.remove("active");
+        currentIndex++;
+        entries[currentIndex].classList.add("active");
+      }
+    } else if(endX > startX + 50){
+      if(currentIndex > 0){
+        entries[currentIndex].classList.remove("active");
+        currentIndex--;
+        entries[currentIndex].classList.add("active");
+      }
+    }
+  };
 }
 
 </script>
