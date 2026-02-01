@@ -4,49 +4,6 @@
 <meta charset="UTF-8">
 <title>Only For Dimple ❤️</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<section class="valentine-intro">
-  <h2>So actually I created this website for you 😭❤️</h2>
-</section>
-<section class="valentine-quiz">
-  <h2>Quiz for you 😌</h2>
-  <p>Who is the absolute boss in this relationship?</p>
-
-  <button>Obviously You</button>
-  <button>Me</button>
-  <button>💗</button>
-</section>
-<section class="gift-section">
-  <h2>Something for You 💗</h2>
-
-  <div class="gift-box">
-    <div class="gift">🎁 Gift 1</div>
-    <div class="gift">🎀 Gift 2</div>
-    <div class="gift">💝 Gift 3</div>
-  </div>
-
-  <button class="final-btn">FINALLY →</button>
-</section>
-<section class="proposal">
-  <h2>Will you be mine 🥺?</h2>
-  <p>I want to spend every single second of my life with you.</p>
-
-  <div class="proposal-btns">
-    <button class="yes">YES</button>
-    <button class="no">NO</button>
-  </div>
-</section>
-<section class="memories">
-  <h2>Look at this cutie 😭</h2>
-
-  <div class="memory-grid">
-    <div>Sweet Hello</div>
-    <div>True Smile</div>
-    <div>Perfect Day</div>
-    <div>Only Us</div>
-    <div>My Home</div>
-    <div>Forever Us</div>
-  </div>
-</section>
 
 <style>
 /* 💥 CONFETTI */
@@ -77,93 +34,6 @@ body{
 .container{
   padding:6vw;
   text-align:center;
-}
-.valentine-intro{
-  text-align:center;
-  padding:60px 20px;
-  background:#000;
-}
-.valentine-intro h2{
-  color:#f5c542;
-  font-size:28px;
-  font-weight:600;
-}
-.valentine-quiz{
-  background:#ffd6e7;
-  padding:50px;
-  text-align:center;
-  border-radius:20px;
-  margin:40px;
-}
-.valentine-quiz h2{
-  font-size:26px;
-}
-.valentine-quiz button{
-  display:block;
-  margin:10px auto;
-  padding:12px 25px;
-  border:none;
-  border-radius:20px;
-  background:#fff;
-  cursor:pointer;
-}
-.gift-section{
-  background:#ffedf3;
-  padding:50px;
-  text-align:center;
-}
-.gift-box{
-  display:flex;
-  justify-content:center;
-  gap:20px;
-}
-.gift{
-  background:#fff;
-  padding:30px;
-  border-radius:15px;
-  width:120px;
-}
-.final-btn{
-  margin-top:30px;
-  padding:12px 30px;
-  border:none;
-  background:red;
-  color:white;
-  border-radius:25px;
-}
-.proposal{
-  background:#ffd1dc;
-  text-align:center;
-  padding:60px 20px;
-}
-.proposal-btns button{
-  padding:12px 30px;
-  border:none;
-  border-radius:20px;
-  margin:10px;
-}
-.yes{
-  background:red;
-  color:white;
-}
-.no{
-  background:blue;
-  color:white;
-}
-.memories{
-  background:#ffeef2;
-  padding:50px;
-  text-align:center;
-}
-.memory-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
-  gap:15px;
-}
-.memory-grid div{
-  background:#fff;
-  padding:20px;
-  border-radius:15px;
 }
 
 /* CARD */
@@ -437,6 +307,49 @@ button{
 #dateList div:hover{
   background:#ffe4f0;
 }
+  *{box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+body{margin:0;background:#ffeef3;color:#333;overflow:hidden}
+
+/* SCREENS */
+.screen{display:none;height:100vh;width:100vw;justify-content:center;align-items:center;flex-direction:column}
+.show{display:flex}
+
+/* PASSWORD */
+#passwordScreen{background:linear-gradient(#ff9a9e,#fad0c4)}
+input,button{
+  padding:14px 25px;border:none;border-radius:30px;font-size:16px
+}
+button{background:#ff4d6d;color:#fff;cursor:pointer}
+
+/* HOME */
+#homeScreen{background:#fff}
+#valIcon{font-size:80px;cursor:pointer}
+
+/* VALENTINE */
+#valentineScreen{background:#ffd6e7;text-align:center}
+.no{position:absolute}
+
+/* HEART PHOTOS */
+#heartScreen{background:#fff;overflow:auto}
+.heart{
+  position:relative;width:300px;height:270px;margin:auto;
+}
+.heart img{
+  position:absolute;width:50px;height:50px;object-fit:cover;border-radius:10px;
+}
+
+/* GIFTS */
+#gifts{display:flex;gap:20px;margin-top:30px}
+.gift{font-size:50px;cursor:pointer}
+
+/* POPUP */
+#popup{
+  display:none;position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(0,0,0,.6);justify-content:center;align-items:center
+}
+#popupBox{
+  background:#fff;padding:20px;border-radius:20px;text-align:center;width:80%
+}
 </style>
 </head>
 
@@ -457,7 +370,40 @@ button{
 <button onclick="unlock()">Enter 💖</button>
 
 <div id="content" style="display:none">
+<!-- HOME -->
+<div id="homeScreen" class="screen">
+  <h2>Tap the Heart 💖</h2>
+  <div id="valIcon" onclick="openVal()">💖</div>
+</div>
 
+<!-- VALENTINE PAGE 1 -->
+<div id="valentineScreen" class="screen">
+  <h1>Will you be mine? 🥺❤️</h1>
+  <br>
+  <button onclick="nextHeart()">YES</button>
+  <button class="no" id="noBtn">NO</button>
+</div>
+
+<!-- HEART PAGE -->
+<div id="heartScreen" class="screen">
+  <h2>My Heart is made of you ❤️</h2>
+  <div class="heart" id="heart"></div>
+
+  <div id="gifts">
+    <div class="gift" onclick="openGift(1)">🎁</div>
+    <div class="gift" onclick="openGift(2)">🎀</div>
+    <div class="gift" onclick="openGift(3)">💝</div>
+  </div>
+</div>
+
+<!-- POPUP -->
+<div id="popup" onclick="this.style.display='none'">
+  <div id="popupBox">
+    <h3>Surprise 💖</h3>
+    <p>You are my forever Valentine ❤️</p>
+  </div>
+</div>
+  
 <!-- ANNIVERSARY -->
 <div class="card">
 <h2>Happy Anniversary bacha ❤️</h2>
@@ -574,7 +520,45 @@ function startSlideshow(){
 
 // Hidden message
 function openSecret(){ document.getElementById("secret").style.display="block"; }
+/* SCREEN SWITCH */
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('show'))
+  document.getElementById(id).classList.add('show')
+}
 
+function openVal(){ show('valentineScreen') }
+function nextHeart(){ show('heartScreen'); makeHeart() }
+
+/* NO BUTTON BHAGTA HAI */
+const no=document.getElementById('noBtn')
+no.onmouseover=()=>{ 
+  no.style.left=Math.random()*80+"vw"
+  no.style.top=Math.random()*80+"vh"
+}
+
+/* HEART SHAPE (PHOTOS SE HEART) */
+function makeHeart(){
+  const heart=document.getElementById('heart')
+  const pos=[
+    [120,0],[80,20],[160,20],
+    [40,60],[200,60],
+    [20,120],[220,120],
+    [80,180],[160,180],
+    [120,230]
+  ]
+  pos.forEach((p,i)=>{
+    let img=document.createElement('img')
+    img.src=`p${i+1}.jpg`
+    img.style.left=p[0]+"px"
+    img.style.top=p[1]+"px"
+    heart.appendChild(img)
+  })
+}
+
+/* GIFTS */
+function openGift(){
+  document.getElementById('popup').style.display='flex'
+}
 // Counter
 function startCounter(){
  const start=new Date("2025-01-19T01:30:00");
@@ -770,6 +754,7 @@ oldEntriesEl.ontouchend = (e)=>{
   if(endX < startX - 50){ if(currentIndex<diaryEntriesArr.length-1){ currentIndex++; updateActiveEntry(); } }
   else if(endX > startX + 50){ if(currentIndex>0){ currentIndex--; updateActiveEntry(); } }
 };
+  
 </script>
 
 </body>
