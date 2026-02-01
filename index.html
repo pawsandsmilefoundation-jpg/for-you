@@ -4,6 +4,49 @@
 <meta charset="UTF-8">
 <title>Only For Dimple ❤️</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<section class="valentine-intro">
+  <h2>So actually I created this website for you 😭❤️</h2>
+</section>
+<section class="valentine-quiz">
+  <h2>Quiz for you 😌</h2>
+  <p>Who is the absolute boss in this relationship?</p>
+
+  <button>Obviously You</button>
+  <button>Me</button>
+  <button>My Mom</button>
+</section>
+<section class="gift-section">
+  <h2>Something for You 💗</h2>
+
+  <div class="gift-box">
+    <div class="gift">🎁 Gift 1</div>
+    <div class="gift">🎀 Gift 2</div>
+    <div class="gift">💝 Gift 3</div>
+  </div>
+
+  <button class="final-btn">FINALLY →</button>
+</section>
+<section class="proposal">
+  <h2>Will you be mine 🥺?</h2>
+  <p>I want to spend every single second of my life with you.</p>
+
+  <div class="proposal-btns">
+    <button class="yes">YES</button>
+    <button class="no">NO</button>
+  </div>
+</section>
+<section class="memories">
+  <h2>Look at this cutie 😭</h2>
+
+  <div class="memory-grid">
+    <div>Sweet Hello</div>
+    <div>True Smile</div>
+    <div>Perfect Day</div>
+    <div>Only Us</div>
+    <div>My Home</div>
+    <div>Forever Us</div>
+  </div>
+</section>
 
 <style>
 /* 💥 CONFETTI */
@@ -34,6 +77,93 @@ body{
 .container{
   padding:6vw;
   text-align:center;
+}
+.valentine-intro{
+  text-align:center;
+  padding:60px 20px;
+  background:#000;
+}
+.valentine-intro h2{
+  color:#f5c542;
+  font-size:28px;
+  font-weight:600;
+}
+.valentine-quiz{
+  background:#ffd6e7;
+  padding:50px;
+  text-align:center;
+  border-radius:20px;
+  margin:40px;
+}
+.valentine-quiz h2{
+  font-size:26px;
+}
+.valentine-quiz button{
+  display:block;
+  margin:10px auto;
+  padding:12px 25px;
+  border:none;
+  border-radius:20px;
+  background:#fff;
+  cursor:pointer;
+}
+.gift-section{
+  background:#ffedf3;
+  padding:50px;
+  text-align:center;
+}
+.gift-box{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+}
+.gift{
+  background:#fff;
+  padding:30px;
+  border-radius:15px;
+  width:120px;
+}
+.final-btn{
+  margin-top:30px;
+  padding:12px 30px;
+  border:none;
+  background:red;
+  color:white;
+  border-radius:25px;
+}
+.proposal{
+  background:#ffd1dc;
+  text-align:center;
+  padding:60px 20px;
+}
+.proposal-btns button{
+  padding:12px 30px;
+  border:none;
+  border-radius:20px;
+  margin:10px;
+}
+.yes{
+  background:red;
+  color:white;
+}
+.no{
+  background:blue;
+  color:white;
+}
+.memories{
+  background:#ffeef2;
+  padding:50px;
+  text-align:center;
+}
+.memory-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:15px;
+}
+.memory-grid div{
+  background:#fff;
+  padding:20px;
+  border-radius:15px;
 }
 
 /* CARD */
